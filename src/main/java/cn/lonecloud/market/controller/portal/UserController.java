@@ -23,8 +23,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user")
 public class UserController extends BaseController<User> {
 
-    @Autowired
-    UserService userService;
 
     /**
      * 登录

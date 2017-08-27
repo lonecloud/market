@@ -21,7 +21,10 @@
     from res_category
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="getCategoryByPId" resultMap="BaseResultMap" parameterType="int">
+        SELECT <include refid="Base_Column_List"/> FROM res_category WHERE parent_id = #{categoryId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from res_category
     where id = #{id,jdbcType=INTEGER}
   </delete>
