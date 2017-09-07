@@ -1,5 +1,6 @@
 package cn.lonecloud.market.service.impl;
 
+import cn.lonecloud.market.base.BaseServiceImpl;
 import cn.lonecloud.market.common.ServerResponse;
 import cn.lonecloud.market.common.TokenCache;
 import cn.lonecloud.market.cts.Constants;
@@ -25,10 +26,8 @@ import static cn.lonecloud.market.common.TokenCache.TOKEN_PREFIX;
  * Created by lonecloud on 2017/8/23.
  */
 @Service
-public class UserServiceImpl implements UserService<User> {
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
-    @Autowired
-    UserMapper userMapper;
 
     @Override
     public ServerResponse<User> login(String username, String password) {

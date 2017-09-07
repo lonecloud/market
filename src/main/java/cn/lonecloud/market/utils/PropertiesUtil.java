@@ -28,6 +28,11 @@ public class PropertiesUtil {
         }
     }
 
+    /**
+     * 获取值
+     * @param key
+     * @return
+     */
     public static String getProperty(String key){
         String value = props.getProperty(key.trim());
         if(StringUtils.isBlank(value)){
@@ -36,7 +41,12 @@ public class PropertiesUtil {
         return value.trim();
     }
 
-
+    /**
+     * 获取值设置默认值
+     * @param key
+     * @param defaultValue
+     * @return
+     */
     public static String getProperty(String key,String defaultValue){
 
         String value = props.getProperty(key.trim());

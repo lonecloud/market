@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 /**
  * Created by lonecloud on 2017/8/23.
  */
- @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)//非空时候才会输出
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)//非空时候才会输出
 public class ServerResponse<T> {
 
     private int status;
@@ -52,16 +52,26 @@ public class ServerResponse<T> {
         return new ServerResponse<T>(ServerResponseCode.SUCCESS.getCode(), msg, data);
     }
 
+    public static <T> ServerResponse<T> success(T data) {
+        return new ServerResponse<T>(ServerResponseCode.SUCCESS.getCode(), ServerResponseCode.SUCCESS.getDesc(), data);
+    }
+
     public static <T> ServerResponse<T> error() {
-        return new ServerResponse<T>(ServerResponseCode.ERROR.getCode(),ServerResponseCode.ERROR.getDesc());
+        return new ServerResponse<T>(ServerResponseCode.ERROR.getCode(), ServerResponseCode.ERROR.getDesc());
     }
 
     public static <T> ServerResponse<T> error(String errorMsg) {
         return new ServerResponse<T>(ServerResponseCode.ERROR.getCode(), errorMsg);
     }
-    public static <T> ServerResponse<T> error(int status,String errorMsg) {
+
+    public static <T> ServerResponse<T> error(int status, String errorMsg) {
         return new ServerResponse<T>(status, errorMsg);
     }
+
+    public static <T> ServerResponse<T> error(ServerResponseCode serverResponseCode) {
+        return new ServerResponse<T>(serverResponseCode.getCode(), serverResponseCode.getDesc());
+    }
+
     public int getStatus() {
         return status;
     }

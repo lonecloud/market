@@ -1,19 +1,20 @@
 package cn.lonecloud.market.service;
 
+import cn.lonecloud.market.base.BaseService;
 import cn.lonecloud.market.common.ServerResponse;
 import cn.lonecloud.market.pojo.User;
 
 /**
  * Created by lonecloud on 2017/8/23.
  */
-public interface UserService<T> {
+public interface UserService extends BaseService<User>{
     /**
      * 登录
      * @param username
      * @param password
      * @return
      */
-    public ServerResponse<T> login(String username,String password);
+    public ServerResponse<User> login(String username,String password);
 
     /**
      * 注册

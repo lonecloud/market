@@ -1,12 +1,15 @@
 package cn.lonecloud.market.service;
 
+import cn.lonecloud.market.base.BaseService;
 import cn.lonecloud.market.common.ServerResponse;
 import cn.lonecloud.market.pojo.Category;
+
+import java.util.Set;
 
 /**
  * Created by lonecloud on 2017/8/24.
  */
-public interface CategoryService {
+public interface CategoryService extends BaseService<Category> {
     /**
      * 查询某个id下一级的所有同级节点
      * @param categoryId
@@ -24,4 +27,6 @@ public interface CategoryService {
     ServerResponse setCategoryName(Integer categoryId,String categoryName);
 
     ServerResponse getDeepChildCategory(Integer categoryId);
+
+    ServerResponse<Set<Integer>> getDeepChildCategoryIds(Integer categoryId);
 }
