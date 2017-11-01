@@ -35,13 +35,13 @@
     <select id="selectByProductIdOrProductName" resultMap="BaseResultMap" parameterType="map">
         SELECT
         <include refid="Base_Column_List"/>
-        form res_product
+        from res_product
         <where>
             <if test="productName!=null">
-                and productName LIKE #{productName}
+                and name LIKE #{productName}
             </if>
             <if test="productId !=null">
-                and productId=#{productId}
+                and id=#{productId}
             </if>
         </where>
     </select>
@@ -55,7 +55,7 @@
         </if>
         <if test="categoryIds!=null">
             and category_id in
-            <foreach collection="categoryIds" item="categoryId" open="(" separator="," close=")">
+            <foreach collection="categoryIds" index="index" item="categoryId" open="(" separator="," close=")">
                 #{categoryId}
             </foreach>
         </if>

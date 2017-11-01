@@ -122,10 +122,12 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
     }
 
     @Override
-    public ServerResponse getProductByKeyWordCategory(String keyword, Integer categoryId,String orderBy, Integer pageNum, Integer pageSize) {
+    public ServerResponse getProductByKeyWordCategory(String keyword, Integer categoryId, String orderBy, Integer pageNum, Integer pageSize) {
+        //判断商品类别是否为空
         if (StringUtils.isBlank(keyword) && categoryId == null) {
-            ServerResponse.error(ServerResponseCode.ILLEGAL_ARGUMENT);
+            return ServerResponse.error(ServerResponseCode.ILLEGAL_ARGUMENT);
         }
+        //获取所有categoryList
         List<Integer> categoryIdList = Lists.newArrayList();
         if (categoryId != null) {
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
@@ -138,14 +140,24 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
             if (StringUtils.isNotBlank(keyword)) {
                 keyword = new StringBuilder("%").append(keyword).append("%").toString();
             }
-//            PageHelper.startPage(pageNum, pageSize);
+            PageHelper.startPage(pageNum, pageSize);
 //            //排序规则 price_desc price_asc
 //            if (StringUtils.isNotBlank(orderBy)){
-//                PageHelper.
+////                PageHelper.
+//                if (Constants.ProductListOrderBy.PRICE_ASC_DESC.contains(orderBy)){
+//                    String[] orderByArr=orderBy.split("_");
+//                    PageHelper
+//                }
 //            }
-            List<Product> products=productMapper.selectByProductNameAndCategoryIds(keyword,categoryIdList);
+            List<ProductListVO> productListVOs=Lists.newArrayList();
+            List<Product> products = productMapper.selectByProductNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword,
+                    categoryIdList.size() == 0 ? null : categoryIdList);
+            List<ProductListVO> productListVOList = listTransferProductListVO(products);
+            PageInfo pageInfo=new PageInfo();
+            pageInfo.setList(productListVOList);
+            return ServerResponse.success(pageInfo);
         }
-        return null;
+        return  ServerResponse.error(ServerResponseCode.ILLEGAL_ARGUMENT);
     }
 
     /**
@@ -174,5 +186,30 @@ public class ProductServiceImpl extends BaseServiceImpl<Product> implements Prod
         productDetailVO.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
         productDetailVO.setUpdateTime(DateTimeUtil.dateToStr(product.getUpdateTime()));
         return productDetailVO;
+    }
+
+    /**
+     * 转换ListVo
+     * @param products
+     * @return
+     */
+    private List<ProductListVO> listTransferProductListVO(List<Product> products){
+        List<ProductListVO> productListVos=Lists.newArrayList();
+        for (Product product:products) {
+            productListVos.add(transferProductListVO(product));
+        }
+        return productListVos;
+    }
+
+    private ProductListVO transferProductListVO(Product product) {
+        ProductListVO listVo=new ProductListVO();
+        listVo.setId(product.getId());
+        listVo.setCategoryId(product.getCategoryId());
+        listVo.setSubtitle(product.getSubtitle());
+        listVo.setImgPrefixUrl(PropertiesUtil.getProperty(Constants.FTPSERVERPREFIX));
+        listVo.setName(product.getName());
+        listVo.setPrice(product.getPrice());
+        listVo.setStatus(product.getStatus());
+        return listVo;
     }
 }

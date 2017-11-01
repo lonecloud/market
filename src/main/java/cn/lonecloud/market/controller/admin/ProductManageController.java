@@ -7,10 +7,7 @@ import cn.lonecloud.market.pojo.Product;
 import cn.lonecloud.market.utils.PropertiesUtil;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +60,7 @@ public class ProductManageController extends BaseController {
      * @param status
      * @return
      */
-    @PostMapping("/updateSaleStatus")
+    @GetMapping("/updateSaleStatus")
     @ResponseBody
     public ServerResponse updateSaleStatus(Integer productId, Integer status) {
         ServerResponse serverResponse = checkCurrentUser();
@@ -79,7 +76,7 @@ public class ProductManageController extends BaseController {
      * @param productId
      * @return
      */
-    @PostMapping("/getProduct")
+    @GetMapping("/getProduct")
     @ResponseBody
     public ServerResponse getProduct(Integer productId) {
         ServerResponse serverResponse = checkCurrentUser();
@@ -96,7 +93,7 @@ public class ProductManageController extends BaseController {
      * @param pageSize
      * @return
      */
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public ServerResponse list(@RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
         ServerResponse serverResponse = checkCurrentUser();
@@ -106,7 +103,7 @@ public class ProductManageController extends BaseController {
         return productService.list(pageNum, pageSize);
     }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     @ResponseBody
     public ServerResponse search(Integer productId, String productName,
                                  @RequestParam(defaultValue = "1") Integer pageNum,

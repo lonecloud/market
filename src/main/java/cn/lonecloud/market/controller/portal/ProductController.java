@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by lonecloud on 2017/8/30.
+ * 用户产品控制层
  */
 @Controller
 @RequestMapping("/product")
@@ -36,10 +37,10 @@ public class ProductController extends BaseController<Product> {
      * @param pageSize
      * @return
      */
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public ServerResponse list(@RequestParam(value = "keyword", required = false) String keyword,
-                               @RequestParam(value = "categoryId", required = false) Integer categoryId,
+                               @RequestParam(value = "categoryId", required = false,defaultValue = "1") Integer categoryId,
                                @RequestParam(value = "orderBy", required = false) String orderBy,
 
                                @RequestParam(defaultValue = "1") Integer pageNum,
