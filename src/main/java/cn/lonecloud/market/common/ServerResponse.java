@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Created by lonecloud on 2017/8/23.
+ * @author lonecloud
+ *
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)//非空时候才会输出
 public class ServerResponse<T> {
@@ -26,6 +28,7 @@ public class ServerResponse<T> {
     }
 
     public ServerResponse(int status, String msg, T data) {
+        this.status=status;
         this.msg = msg;
         this.data = data;
     }
