@@ -1,5 +1,9 @@
 package cn.lonecloud.market.cts;
 
+import com.google.common.collect.Sets;
+
+import java.util.Set;
+
 /**
  * Created by lonecloud on 2017/8/23.
  * 常量类
@@ -45,4 +49,13 @@ public interface Constants {
 
     }
 
+    public interface ProductListOrderBy{
+        static final Set<String> PRICE_ASC_DESC= Sets.newHashSet("price_asc","price_desc");
+    }
+
+    //
+    public interface LimitCartCount{
+        String LIMIT_NUM_SUCCESS="LIMIT_NUM_SUCCESS";
+        String LIMIT_NUM_FAIL="LIMIT_NUM_FAIL";
+    }
 }

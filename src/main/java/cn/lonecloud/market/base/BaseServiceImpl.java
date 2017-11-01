@@ -1,9 +1,7 @@
 package cn.lonecloud.market.base;
 
 import cn.lonecloud.market.common.ServerResponse;
-import cn.lonecloud.market.dao.CategoryMapper;
-import cn.lonecloud.market.dao.ProductMapper;
-import cn.lonecloud.market.dao.UserMapper;
+import cn.lonecloud.market.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
     protected UserMapper userMapper;
+
+    @Autowired
+    protected CartMapper cartMapper;
+
+    @Autowired
+    protected ShippingMapper shippingMapper;
 
 
 }

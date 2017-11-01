@@ -3,6 +3,7 @@ package cn.lonecloud;
 import cn.lonecloud.market.common.ServerResponse;
 import cn.lonecloud.market.service.CategoryService;
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections.Bag;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by lonecloud on 2017/8/23.
+ * @author lonecloud
  */
 public class TokenCache {
 
