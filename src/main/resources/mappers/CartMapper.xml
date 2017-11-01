@@ -21,10 +21,46 @@
         from res_cart
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectCartByPIdAndUid" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from res_cart
+        WHERE
+        product_id=#{productId}
+        and
+        user_id=#{userId}
+    </select>
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM res_cart
+        WHERE
+        user_id=#{userId}
+    </select>
+    <select id="selectCheckCartProductStatusByUserId" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM res_cart
+        WHERE
+        user_id=#{userId} and checked = 0
+    </select>
+    <select id="getCartProductCount" resultType="int">
+      SELECT IFNULL(sum(quantity),0) as count
+      from res_cart
+      WHERE
+      user_id=#{userId}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from res_cart
     where id = #{id,jdbcType=INTEGER}
   </delete>
+    <delete id="deleteByUserIdAndProductIds">
+        DELETE from res_cart
+        where user_id=#{userId} AND
+        product_id IN
+        <foreach collection="productIdList" index="index" item="item" open="(" close=")" separator=",">
+            item.product_id
+        </foreach>
+    </delete>
     <insert id="insert" parameterType="cn.lonecloud.market.pojo.Cart">
     insert into res_cart (id, user_id, product_id, 
       quantity, checked, create_time, 
@@ -116,4 +152,13 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <update id="updateProductChecked" parameterType="map">
+        update res_cart
+        set checked=#{checked},
+            update_time=now()
+        where user_id=#{userId}
+        <if test="productId!=null">
+            product_id=#{productId}
+        </if>
+    </update>
 </mapper>
